@@ -1,0 +1,8 @@
+* {
+  z-index: 0;
+}
+
+.validation{
+  color: red;
+  font-size: 12px;
+}

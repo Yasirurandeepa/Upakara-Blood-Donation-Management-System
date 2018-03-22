@@ -1,0 +1,26 @@
+<div class="container-fluid" style="background-color:#F44336;color:#fff;height:60px;">
+  <h3 class="col-md-4 col-sm-6" style="font-family: Calibri; font-size: 16px; text-align: center">Welcome to Blood Donation Management System</h3>
+</div>
+
+<nav class="navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a href="#"><img src="http://templates.bwlthemes.com/blood_donation/images/logo.png" class="navbar-brand"></a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li><a [routerLink]="['./home']">Home</a></li>
+      <li><a [routerLink]="['./facts']">Blood Donation Facts</a></li>
+      <li><a [routerLink]="['./about']">About</a></li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a [routerLink]="['./signup']"><a class="logsign" (click)="signupClicked()"><span class="glyphicon glyphicon-user"></span>Sign Up</a></a></li>
+      <li><a [routerLink]="['./login']"><a class="logsign" (click)="loginClicked()"><span class="glyphicon glyphicon-log-in"></span><span> </span>Login</a></a></li>
+    </ul>
+  </div>
+</nav>
+
+
+
+
+
+

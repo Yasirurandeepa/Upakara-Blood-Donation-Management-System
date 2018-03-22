@@ -1,0 +1,41 @@
+<div class="main-content" >
+    <div class="container-fluid">
+        <div class="card">
+            <div class="header">
+                <h4 class="title">Notifications</h4>
+            </div>
+            <div class="content">
+                <div class="row">
+                    <div class="col-md-10">
+                        <h5>Notifications Style</h5>
+                        <div class="alert alert-info" *ngFor="let msg of donor_notifications">
+                          <span><span class="glyphicon glyphicon-user"></span> Request from {{msg.seeker_username}} where {{msg.contact_no}}.</span>
+                          <button type="button" class="close open" (click)="updateDonorNotification(msg.donor_username, msg.seeker_username)"><span class="glyphicon glyphicon-ok"></span></button>
+                          <form method="post">
+                            <button type="button" aria-hidden="true" class="close" (click)="deleteDonorNotification(msg.donor_username, msg.seeker_username)"><span class="glyphicon glyphicon-remove"></span></button>
+                          </form>
+                        </div>
+                        <!--<div class="alert alert-info">-->
+                            <!--<button type="button" aria-hidden="true" class="close">×</button>-->
+                            <!--<span>This is a notification with close button.</span>-->
+                        <!--</div>-->
+                        <!--<div class="alert alert-info" data-notify="container">-->
+                            <!--<button type="button" aria-hidden="true" class="close">×</button>-->
+                            <!--<span data-notify="icon" class="pe-7s-bell"></span>-->
+                            <!--<span data-notify="message">This is a notification with close button and icon.</span>-->
+                        <!--</div>-->
+                        <!--<div class="alert alert-info" data-notify="container">-->
+                            <!--<button type="button" aria-hidden="true" class="close">×</button>-->
+                            <!--<span data-notify="icon" class="pe-7s-bell"></span>-->
+                            <!--<span data-notify="message">This is a notification with close button and icon and have many lines. You can see that the icon and the close button are always vertically aligned. This is a beautiful notification. So you don't have to worry about the style.</span>-->
+                        <!--</div>-->
+                    </div>
+
+                </div>
+                <br>
+                <br>
+
+            </div>
+        </div>
+    </div>
+</div>

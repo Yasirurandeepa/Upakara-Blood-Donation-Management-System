@@ -1,0 +1,28 @@
+<div *ngIf="!log.isLogin">
+  <app-header></app-header>
+  <router-outlet></router-outlet>
+</div>
+<div *ngIf="log.isLogin">
+  <div class="wrapper">
+    <div *ngIf="log.type==='Seeker'">
+      <div class="sidebar" data-color="red" data-image="">
+        <app-sidebar></app-sidebar>
+        <div class="sidebar-background"></div>
+      </div>
+    </div>
+    <div *ngIf="log.type==='Donor'">
+      <div class="sidebar" data-color="red" data-image="">
+        <app-sidebar-donor></app-sidebar-donor>
+        <div class="sidebar-background"></div>
+      </div>
+    </div>
+
+    <div class="main-panel">
+      <navbar-cmp></navbar-cmp>
+      <router-outlet></router-outlet>
+      <div *ngIf="isMap('maps')">
+      </div>
+    </div>
+  </div>
+</div>
+

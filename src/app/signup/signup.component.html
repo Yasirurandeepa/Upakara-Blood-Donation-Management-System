@@ -1,0 +1,286 @@
+<div class="bg">
+  <div class="hero-text">
+    <h1 style="font-size:50px">Donate Blood</h1>
+    <p>And Save a life!!!</p>
+    <button>Join</button>
+  </div>
+  <img src="https://media.istockphoto.com/photos/donation-picture-id473791680?k=6&m=473791680&s=612x612&w=0&h=Jc23ILpr8RE9wuorowrFMYG8kcFswFifX4vkENWz6as=" alt="Chicago" style="width:100%; max-height: 623px; ">
+</div>
+<div class="container">
+  <div class="modal fade login" id="loginModal">
+    <div class="modal-dialog login animated">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title">Login with</h4>
+        </div>
+        <div class="modal-body">
+          <div class="box">
+            <div class="content">
+              <div class="social">
+                <a class="circle github" href="/auth/github">
+                  <i class="fa fa-github fa-fw"></i>
+                </a>
+                <a id="google_login" class="circle google" href="/auth/google_oauth2">
+                  <i class="fa fa-google-plus fa-fw"></i>
+                </a>
+                <a id="facebook_login" class="circle facebook" href="/auth/facebook">
+                  <i class="fa fa-facebook fa-fw"></i>
+                </a>
+              </div>
+              <div class="division">
+                <div class="line l"></div>
+                <span>Upakara</span>
+                <div class="line r"></div>
+              </div>
+              <div class="error"></div>
+              <div class="form loginBox">
+                <form method="post" name="formSeeker1">
+                  <div class="form-group">
+                    <label for="username_seeker" class="control-label col-md-2">Username</label>
+                    <div>
+                      <input type="text" name="username" class="form-control" id="username_seeker" placeholder="Enter Username">
+                      <label class="validation">{{valUserName}}</label>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="email_seeker" class="control-label col-md-2">Email</label>
+                    <div>
+                      <input type="text" name="email" class="form-control" id="email_seeker" placeholder="Enter Email Address">
+                      <label class="validation">{{valEmail}}</label>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="password_seeker" class="control-label col-md-2">Password</label>
+                    <div>
+                      <input type="password" name="password" class="form-control" id="password_seeker" placeholder="Enter Password">
+                      <label class="validation">{{valPassword}}</label>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="password_re_seeker" class="control-label col-md-2">Password Confirmation</label>
+                    <div>
+                      <input type="password" name="password_confirmation" class="form-control" id="password_re_seeker" placeholder="Re Enter the Password ">
+                      <label class="validation">{{valRePassword}}</label>
+                    </div>
+                  </div>
+                  <input class="btn btn-default btn-login" type="button" value="Next" (click)="showSecondStepSeeker()">
+                </form>
+                <div class="forgot">
+                  <span>Signup as a</span>
+                  <a (click)="showRegisterFormDonor()">Donor</a>
+                </div>
+              </div>
+              <div class="box">
+                <div class="content SeekersecondBox" style="display:none;">
+                  <div class="form">
+                    <form method="post" name="formSeeker2">
+                      <div class="form-group">
+                        <label for="contact_seeker" class="control-label col-md-2">Contact Number</label>
+                        <div>
+                          <input type="text" name="contact_no" class="form-control" id="contact_seeker" placeholder="Enter Contact Number">
+                          <label class="validation">{{valContact}}</label>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="gender_seeker" class="control-label col-md-2">Gender</label>
+                        <div>
+                          <select class="form-control divi" name="gender" id="gender_seeker">
+                            <option>Male</option>
+                            <option>Female</option>
+                          </select>
+                          <label class="validation">{{valGender}}</label>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="nic_seeker" class="control-label col-md-2">NIC</label>
+                        <div>
+                          <input type="text" name="nic" class="form-control" id="nic_seeker" placeholder="Enter NIC">
+                          <label class="validation">{{valNIC}}</label>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="blood_group_seeker" class="control-label col-md-2">Blood Group</label>
+                        <div>
+                          <select class="form-control divi" name="blood_group" id="blood_group_seeker">
+                            <option>A+</option>
+                            <option>A-</option>
+                            <option>B+</option>
+                            <option>B-</option>
+                            <option>O+</option>
+                            <option>O-</option>
+                            <option>AB+</option>
+                            <option>AB-</option>
+                          </select>
+                          <label class="validation">{{valGroup}}</label>
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <div>
+                          <input type="submit" value="Back" class="btn btn-success btn-lg" (click)="backToFirstStepSeeker()">
+                          <input type="submit" value="Submit" class="btn btn-primary btn-lg" (click)="addSeeker()">
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="box">
+            <div class="content registerBox" style="display:none;">
+              <div class="form">
+                <form method="post" name="donorForm1">
+                  <div class="form-group">
+                    <label for="username_donor" class="control-label col-md-2">Username</label>
+                    <div>
+                      <input type="text" name="username" class="form-control" id="username_donor" placeholder="Enter Username">
+                      <label class="validation">{{valUserName}}</label>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="email_donor" class="control-label col-md-2">Email</label>
+                    <div>
+                      <input type="text" name="email" class="form-control" id="email_donor" placeholder="Enter Email Address">
+                      <label class="validation">{{valEmail}}</label>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="password_donor" class="control-label col-md-2">Password</label>
+                    <div>
+                      <input type="password" name="password" class="form-control" id="password_donor" placeholder="Enter Password">
+                      <label class="validation">{{valPassword}}</label>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="password_re_donor" class="control-label col-md-2">Password Confirmation</label>
+                    <div>
+                      <input type="password" name="password_confirmation" class="form-control" id="password_re_donor" placeholder="Re Enter the Password ">
+                      <label class="validation">{{valRePassword}}</label>
+                    </div>
+                  </div>
+                  <input class="btn btn-default btn-register" type="submit" value="Next" (click)="showSecondStepDonor()">
+                </form>
+                <div class="forgot">
+                  <span>Signup as a</span>
+                  <a (click)="showRegisterFormSeeker()">Seeker</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="box">
+            <div class="content secondBox" style="display:none;">
+              <div class="form">
+                <form method="post"  name="donorForm2">
+                  <div class="form-group">
+                    <label for="gender_donor" class="control-label col-md-2">Gender</label>
+                    <div>
+                      <select class="form-control" name="gender" id="gender_donor">
+                        <option>Male</option>
+                        <option>Female</option>
+                      </select>
+                      <label class="validation">{{valGender}}</label>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="nic_donor" class="control-label col-md-2">NIC</label>
+                    <div>
+                      <input type="text" name="nic" class="form-control" id="nic_donor" placeholder="Enter NIC">
+                      <label class="validation">{{valNIC}}</label>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="blood_group_donor" class="control-label col-md-2">Blood Group</label>
+                    <div>
+                      <select class="form-control" name="blood_group" id="blood_group_donor">
+                        <option>A+</option>
+                        <option>A-</option>
+                        <option>B+</option>
+                        <option>B-</option>
+                        <option>O+</option>
+                        <option>O-</option>
+                        <option>AB+</option>
+                        <option>AB-</option>
+                      </select>
+                      <label class="validation">{{valGroup}}</label>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div>
+                      <input type="submit" value="Back" class="btn btn-success btn-lg" (click)="backToFirstStepDonor()">
+                      <input type="submit" value="Next" class="btn btn-primary btn-lg" (click)="showThirdStepDonor()">
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <div class="box">
+            <div class="content thirdBox" style="display:none;">
+              <div class="form">
+                <form method="post" name="donorForm3">
+                  <div class="form-group">
+                    <label for="contact_donor" class="control-label col-md-2">Contact Number</label>
+                    <div>
+                      <input type="text" name="contact_no" class="form-control" id="contact_donor" placeholder="Enter Contact Number">
+                      <label class="validation">{{valContact}}</label>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="address_donor" class="control-label col-md-2">Address</label>
+                    <div>
+                      <input type="text" name="address" class="form-control" id="address_donor" placeholder="Enter Address">
+                      <label class="validation">{{valAddress}}</label>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="district_donor" class="control-label col-md-2">District</label>
+                    <div>
+                      <select class="form-control divi" name="district" id="district_donor">
+                        <option>Ampara</option>
+                        <option>Anuradhapura</option>
+                        <option>Badulla</option>
+                        <option>Batticaloa</option>
+                        <option>Colombo</option>
+                        <option>Galle</option>
+                        <option>Gampaha</option>
+                        <option>Hambanthota</option>
+                        <option>Jaffna</option>
+                        <option>Kaluthara</option>
+                        <option>Kandy</option>
+                        <option>Kegalle</option>
+                        <option>Kilinochchi</option>
+                        <option>Kurunagala</option>
+                        <option>Mannar</option>
+                        <option>Mathale</option>
+                        <option>Mathara</option>
+                        <option>Monaragala</option>
+                        <option>Mullathivu</option>
+                        <option>Nuwara eliya</option>
+                        <option>Polonnaruwa</option>
+                        <option>Puttalam</option>
+                        <option>Ratnapura</option>
+                        <option>Trincomalle</option>
+                        <option>Vavniya</option>
+                      </select>
+                      <label class="validation">{{valDistrict}}</label>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <div>
+                      <input type="submit" value="Back" class="btn btn-success btn-lg" (click)="backToSecondStepDonor()">
+                      <input type="submit" value="Submit" class="btn btn-primary btn-lg" (click)="confirmDonor()">
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,83 @@
+<div class="container">
+  <div class="page-header">
+    <h2>Search for Donors</h2>
+  </div>
+  <form name="searchForm">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="form-group">
+          <label>Blood Group</label>
+          <select class="form-control divi" name="blood_group">
+            <option>A+</option>
+            <option>A-</option>
+            <option>B+</option>
+            <option>B-</option>
+            <option>O+</option>
+            <option>O-</option>
+            <option>AB+</option>
+            <option>AB-</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label>District</label>
+          <select class="form-control divi" name="district">
+            <option>Ampara</option>
+            <option>Anuradhapura</option>
+            <option>Badulla</option>
+            <option>Batticaloa</option>
+            <option>Colombo</option>
+            <option>Galle</option>
+            <option>Gampaha</option>
+            <option>Hambanthota</option>
+            <option>Jaffna</option>
+            <option>Kaluthara</option>
+            <option>Kandy</option>
+            <option>Kegalle</option>
+            <option>Kilinochchi</option>
+            <option>Kurunagala</option>
+            <option>Mannar</option>
+            <option>Mathale</option>
+            <option>Mathara</option>
+            <option>Monaragala</option>
+            <option>Mullathivu</option>
+            <option>Nuwara eliya</option>
+            <option>Polonnaruwa</option>
+            <option>Puttalam</option>
+            <option>Ratnapura</option>
+            <option>Trincomalle</option>
+            <option>Vavniya</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <input type="submit" class="btn btn-success" style="margin-top: 24px;" (click)="searchDonors()" value="Search">
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <table class="table table-bordered table-responsive table-hover" style="margin-top: 10px;">
+    <thead>
+    <tr>
+      <th>Username</th>
+      <th colspan="2">Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let donor of donors">
+      <td>{{donor.username}}</td>
+      <td>
+        <button class="btn btn-success" (click)="request_donor(donor.username)" >Request</button>
+      </td>
+      <td>
+        <form method="post">
+          <input type="submit" value="Report" class="btn btn-danger" (click)=deleteHall()>
+        </form>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

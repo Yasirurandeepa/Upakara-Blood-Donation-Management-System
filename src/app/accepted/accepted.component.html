@@ -1,0 +1,26 @@
+<table class="table table-bordered table-responsive table-hover" style="margin-top: 10px;">
+  <thead>
+  <tr>
+    <th>Donor Username</th>
+    <th>Email</th>
+    <th>Gender</th>
+    <th>NIC</th>
+    <th>Blood_Group</th>
+    <th>Contact_Number</th>
+    <th>Address</th>
+    <th>District</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let donor of acceptedDonors">
+    <td>{{donor.username}}</td>
+    <td>{{donor.email}}</td>
+    <td>{{donor.gender}}</td>
+    <td>{{donor.NIC}}</td>
+    <td>{{donor.blood_group}}</td>
+    <td>{{donor.contact_no}}</td>
+    <td>{{donor.address}}</td>
+    <td>{{donor.district}}</td>
+  </tr>
+  </tbody>
+</table>
