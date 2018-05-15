@@ -15,6 +15,8 @@ import {FirstPageComponent} from "./first-page/first-page.component";
 import {AboutComponent} from "./about/about.component";
 import {AcceptedComponent} from "./accepted/accepted.component";
 import {AuthGuard} from "./services/auth.guard";
+import {AdminUserSearchComponent} from "./admin-user-search/admin-user-search.component";
+import {ReportComponent} from "./report/report.component";
 
 const routes: Routes =[
     { path: 'facts',      component: FactsComponent},
@@ -23,11 +25,13 @@ const routes: Routes =[
     { path: 'login',           component: LoginComponent},
     { path: 'dashboard',  canActivate: [AuthGuard],    component: HomeComponent},
     // { path: 'header',      component: HeaderComponent },
-    { path: 'user',  component: UserComponent},
-    { path: 'accepted',  canActivate: [AuthGuard],     component: AcceptedComponent},
-    { path: 'notifications', canActivate: [AuthGuard],  component: NotificationsComponent},
-    { path: 'search', canActivate: [AuthGuard], component: SearchComponent},
-    { path: 'home', component: FirstPageComponent},
+    { path: 'user',  canActivate: [AuthGuard],  component: UserComponent},
+    { path: 'accepted',   canActivate: [AuthGuard],  component: AcceptedComponent},
+    { path: 'notifications',  canActivate: [AuthGuard], component: NotificationsComponent},
+    { path: 'search',  canActivate: [AuthGuard],   component: SearchComponent},
+    { path: 'admin_search',  canActivate: [AuthGuard],   component: AdminUserSearchComponent},
+    { path: 'reports',  canActivate: [AuthGuard],   component: ReportComponent},
+    { path: 'home',   component: FirstPageComponent},
     { path: '',          redirectTo: 'home', pathMatch: 'full' }
 ];
 

@@ -46,6 +46,37 @@ const getDonor = (donor) => {
   });
 };
 
+const updateDetails = (donor) => {
+  return new Promise((resolve, reject) => {
+    connection.query("UPDATE donor SET email=?, contact_no=?, gender=?, NIC=?, blood_group=?  WHERE username=?", [
+      donor.email,
+      donor.contact_no,
+      donor.gender,
+      donor.nic,
+      donor.blood_group,
+      donor.username
+    ], (err, result) => {
+      if (err) {
+        reject(err);
+      }
+      resolve(result);
+    })
+  });
+};
+
+const removeDonorProfile = (donor) => {
+  return new Promise((resolve, reject) => {
+    connection.query("DELETE FROM user WHERE username=?", [
+      donor.username
+    ], (err, result) => {
+      if (err) {
+        reject(err);
+      }
+      resolve(result);
+    })
+  });
+};
+
 module.exports = {
-  addNewDonor, searchUser, getDonor
+  addNewDonor, searchUser, getDonor, updateDetails, removeDonorProfile
 };

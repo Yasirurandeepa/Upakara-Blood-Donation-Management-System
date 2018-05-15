@@ -1,6 +1,6 @@
 const mysql = require('mysql');
 
-var connection = mysql.createConnection({
+var connection = mysql.createConnection({         //one connection object used (singleton design pattern)
   host: "127.0.0.1",
   user: "root",
   password: "",

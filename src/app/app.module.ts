@@ -28,6 +28,12 @@ import { AcceptedComponent } from './accepted/accepted.component';
 import {AuthGuard} from "./services/auth.guard";
 import { SidebarDonorComponent } from './sidebar-donor/sidebar-donor.component';
 import {DonorService} from "./services/donor.service";
+import { SidebarAdminComponent } from './sidebar-admin/sidebar-admin.component';
+import { AdminUserSearchComponent } from './admin-user-search/admin-user-search.component';
+import {AdminService} from "./services/admin.service";
+import { ReportComponent } from './report/report.component';
+import {ReportService} from "./services/report.service";
+import {RateService} from "./services/rate.service";
 
 @NgModule({
   declarations: [
@@ -43,7 +49,10 @@ import {DonorService} from "./services/donor.service";
     FirstPageComponent,
     AboutComponent,
     AcceptedComponent,
-    SidebarDonorComponent
+    SidebarDonorComponent,
+    SidebarAdminComponent,
+    AdminUserSearchComponent,
+    ReportComponent
   ],
   imports: [
     FormsModule,
@@ -55,7 +64,7 @@ import {DonorService} from "./services/donor.service";
     AppRoutingModule,
     LbdModule,
   ],
-  providers: [SignupService, LoginService, SeekerService, DonorService, NotificationService, AuthGuard, UserService],
+  providers: [SignupService, LoginService, AdminService, SeekerService, DonorService, NotificationService, ReportService, AuthGuard, UserService, RateService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

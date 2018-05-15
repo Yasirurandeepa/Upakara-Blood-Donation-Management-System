@@ -12,7 +12,7 @@
                                 <div class="col-md-5">
                                     <div class="form-group">
                                         <label>User</label>
-                                        <input type="text" class="form-control" disabled  value="Seeker">
+                                        <input type="text" class="form-control" disabled  value={{userType}}>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
@@ -76,15 +76,7 @@
                               </div>
                             </div>
 
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label>About Me</label>
-                                        <textarea rows="5" class="form-control" placeholder="Here can be your description" value="Mike">I'm searching for O+ blood immediately</textarea>
-                                    </div>
-                                </div>
-                            </div>
-                            <button type="submit" class="btn btn-danger btn-fill pull-right" style="margin: 5px;">Delete Profile</button>
+                            <button type="submit" class="btn btn-danger btn-fill pull-right" style="margin: 5px;" (click)="deleteProfile()">Delete Profile</button>
                             <button type="submit" class="btn btn-info btn-fill pull-right" style="margin: 5px;" (click)="updateDetails()">Update Profile</button>
                             <div class="clearfix"></div>
                         </form>
@@ -106,10 +98,6 @@
                                 </h4>
                             </div>
                         </div>
-                        <p class="description text-center"> I'm searching  <br>
-                          for O+ blood immediately <br>
-                            I'm in that two seat Lambo"
-                        </p>
                     </div>
                     <hr>
                     <div class="text-center">

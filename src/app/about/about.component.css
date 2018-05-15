@@ -113,3 +113,7 @@ body {
 .copyright{
   text-align: center;
 }
+
+.img-responsive{
+  border-radius: 100%;
+}

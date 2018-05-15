@@ -1,6 +1,9 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { ROUTES } from '../../sidebar/sidebar.component';
-import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common';
+import {Location} from '@angular/common';
+import {Router} from "@angular/router";
+import {LoginService} from "../../services/login.service";
+import swal from 'sweetalert';
 
 @Component({
     // moduleId: module.id,
@@ -14,7 +17,7 @@ export class NavbarComponent implements OnInit{
     private toggleButton: any;
     private sidebarVisible: boolean;
 
-    constructor(location: Location,  private element: ElementRef) {
+    constructor(location: Location,  private element: ElementRef, private router: Router, private login: LoginService) {
       this.location = location;
           this.sidebarVisible = false;
     }
@@ -58,6 +61,29 @@ export class NavbarComponent implements OnInit{
               return this.listTitles[item].title;
           }
       }
-      return 'Dashboard';
+      // return 'Dashboard';
+    }
+
+    logout(){
+      swal({
+        // title:
+        text: "Are you sure want to logout from the account?",
+        icon: "warning",
+        buttons: ['Cancel', 'Ok'],
+        dangerMode: false,
+      })
+        .then((willDelete) => {
+          if (willDelete) {
+            swal("You have successfully logout from the account!", {
+              icon: "success",
+            });
+            sessionStorage.removeItem('isLoggedIn');                //remove session details
+            sessionStorage.removeItem('Type');
+            sessionStorage.removeItem('currentUser');
+            window.location.reload();
+          } else {
+            swal("Your have cancelled!");
+          }
+        });
     }
 }

@@ -16,6 +16,12 @@
         <div class="sidebar-background"></div>
       </div>
     </div>
+    <div *ngIf="log.type==='Admin'">
+      <div class="sidebar" data-color="red" data-image="">
+        <app-sidebar-admin></app-sidebar-admin>
+        <div class="sidebar-background"></div>
+      </div>
+    </div>
 
     <div class="main-panel">
       <navbar-cmp></navbar-cmp>

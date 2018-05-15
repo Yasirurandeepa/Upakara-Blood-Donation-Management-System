@@ -2,8 +2,10 @@ import {Component, OnInit, style} from '@angular/core';
 import {Router} from '@angular/router';
 import {UserService} from '../Services/user.service';
 import {LoginService} from "../services/login.service";
-import index from "@angular/cli/lib/cli";
-// import {sendMsg} from './login';
+import swal from 'sweetalert';
+import {SignupService} from "../services/signup.service";
+import {createInput} from "@angular/compiler/src/core";
+import {type} from "os";
 declare var $: any;
 
   @Component({
@@ -16,8 +18,9 @@ export class LoginComponent implements OnInit{
   valUsername: string;
   valPassword: string;
   isValid: boolean;
+  verification_code: number;
 
-  constructor(private router: Router, private user: UserService, private log: LoginService) {
+  constructor(private router: Router, private user: UserService, private log: LoginService, private sms: SignupService) {
     this.loginService = log;
   }
 
@@ -33,7 +36,7 @@ export class LoginComponent implements OnInit{
     $('#loginModal .registerBox').fadeOut('fast',function(){
       $('.loginBox').fadeIn('fast');
       $('.register-footer').fadeOut('fast',function(){
-        $('.login-footer').fadeIn('fast');
+        $('.login.js-footer').fadeIn('fast');
       });
     });
     $('.error').removeClass('alert alert-danger').html('');
@@ -48,6 +51,52 @@ export class LoginComponent implements OnInit{
   }
 
   login() {
+    // this.sms.sendSms().subscribe(
+    //   result => {
+    //     this.verification_code = result.verification_code;
+    //     console.log(typeof (result.verification_code));
+    //     console.log(result);
+    //   }
+    // );
+
+    // swal("Write something here:", {
+    //   content: {
+    //     element: "input",
+    //   },
+    // })
+    //   .then((value) => {
+    //   this.verify = Number(value);
+    //     if (this.verification_code === this.verify) {
+    //       swal("You have successfully registered!", {
+    //         icon: "success",
+    //       });
+    //     } else {
+    //       swal("Verification code is Incorrect!");
+    //     }
+    //   });
+
+
+
+
+    // swal("Write something here:", {
+    //   content: {
+    //     element: "input",
+    //   },
+    // })
+    //   .then((value) => {
+    //     swal(`You typed: ${value}`);
+    //   });
+
+
+    // swal({
+    //   content: {
+    //     element: "input",
+    //     attributes: {
+    //       placeholder: "Enter your verification code",
+    //       type: "text",
+    //     },
+    //   },
+    // });
 
     if (this.validate()) {
       const username = document.forms['loginForm']['username'].value;
@@ -68,22 +117,31 @@ export class LoginComponent implements OnInit{
             this.log.type = sessionStorage.getItem('Type');
 
             this.log.setUserLoggedIn();
-            alert('You are logged in!!!');
+            swal("Login Successful!", "You are successfully logged in!", "success");
 
             sessionStorage.setItem('isLoggedIn', 'true');
             this.log.isLogin = Boolean(sessionStorage.getItem('isLoggedIn')).valueOf();
 
             $('#loginModal').modal('hide');
-            this.router.navigate(['dashboard']);
+            if(type=='Admin'){
+              this.router.navigate(['admin_search']);
+            }
+            if(type=='Seeker'){
+              this.router.navigate(['user']);
+            }
+            if(type=='Donor'){
+              this.router.navigate(['user']);
+            }
+
           } else {
             this.valUsername = '';
             this.valPassword = 'Username and Password mismatched!!!';
-            alert('Invalid User!!!');
+            swal("", "User not found!", "info");
           }
         }, error => {
           console.log(error);
-          alert('Not a valid User!!!');
-        }
+          swal("Not a valid User!!!");
+    }
       );
     }
   }
@@ -112,22 +170,5 @@ export class LoginComponent implements OnInit{
       return false;
     }
   }
-  /*SendSMS() {
-    console.log('send');
-    // Twilio Credentials
-    const accountSid = 'ACfe1b9bb3073c21d24eb8a0ba34d0708a';
-    const authToken = 'c1caf0c048993a0964703b74ad2f9813';
-
-    // require the Twilio module and create a REST client
-    const client = require('twilio')(accountSid, authToken);
-
-    client.messages
-      .create({
-        to: '+94716220859',
-        from: '+94716220786',
-        body: 'This is the ship that made the Kessel Run in fourteen parsecs?',
-      })
-      .then(message => console.log(message.sid));
-  }*/
 }
 

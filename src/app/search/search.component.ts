@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {SeekerService} from "../services/seeker.service";
 import {NotificationService} from "../services/notification.service";
 import {LoginService} from "../services/login.service";
+import swal from 'sweetalert';
 
 @Component({
   selector: 'app-search',
@@ -44,42 +45,31 @@ export class SearchComponent implements OnInit {
   }
 
   request_donor(donor_username) {
-    this.notification.sendDonorNotification({
-      donor_username: donor_username,
-      seeker_username: this.login.userName                    //////////// session username /////////////
-    }).subscribe(
-      result => {
-        console.log(result);
-      },
-      error => {
-        alert("Already Requested")
-      }
-    );
+    swal({
+      // title:
+      text: "Are you sure want to request from this user?",
+      buttons: ['Cancel', 'Ok'],
+      dangerMode: false,
+    })
+      .then((willDelete) => {
+        if (willDelete) {
+          swal("You have successfully request from this user!", {
+            icon: "success",
+          });
+          this.notification.sendDonorNotification({
+            donor_username: donor_username,
+            seeker_username: this.login.userName                    //////////// session username /////////////
+          }).subscribe(
+            result => {
+            },
+            error => {
+              swal("", "Already requested from this user!", "error")
+            }
+          );
+        } else {
+          swal("Your have cancelled!");
+        }
+      });
   }
 
-  // getHalls() {
-  //   this.hall.queryHalls().subscribe(
-  //     halls => {
-  //       this.halls = halls;
-  //     },
-  //     error => {
-  //       console.log(error);
-  //     }
-  //   );
-  // }
-  //
-  // deleteHall(id) {
-  //   const conf = confirm('Do you really want me to delete this record?');
-  //   if (conf === true) {
-  //     this.hall.delete_hall({
-  //       h_no: id,
-  //     }).subscribe(
-  //       result => {
-  //         this.getHalls();
-  //       }, error => {
-  //         console.log(error);
-  //       }
-  //     );
-  //   }
-  // }
 }

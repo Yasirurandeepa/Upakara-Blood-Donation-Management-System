@@ -6,7 +6,9 @@ var DonorController = require('./controllers/donor.controller');
 var SeekerController = require('./controllers/seeker.controller');
 var UserController = require('./controllers/user.controller');
 var NotificationController = require('./controllers/notification.controller');
-
+var ReportController = require('./controllers/report.controller');
+var AdminController = require('./controllers/admin.controller');
+var RateController = require('./controllers/rate.controller');
 
 var app = express();
 
@@ -55,6 +57,21 @@ app.post("/get_donors", (req, res) => {                                  //get d
   });
 });
 
+app.patch("/update_donor_details", (req, res) => {                                           //update donor details
+  DonorController.updateDetails(req.body).then((result) => {
+    res.status(200).send(result);
+  }).catch((err) => {
+    res.status(400).send(err);
+  });
+});
+
+app.post("/remove_donor_profile", (req, res) => {                              //remove selected notification
+  DonorController.removeDonorProfile(req.body).then((result) => {
+    res.status(200).send(result);
+  }).catch((err) => {
+    res.status(400).send(err);
+  });
+});
 //------------------------------seeker entity-----------------------------------------------------------------------------
 
 app.post("/get_seeker", (req, res) => {                                  //get seeker details by his username
@@ -81,14 +98,30 @@ app.post("/show_accepted_donors", (req, res) => {                              /
   });
 });
 
-app.patch("/update_seeker_details", (req, res) => {                                           //update selected notification
+app.patch("/update_seeker_details", (req, res) => {                                           //update seeker details
   SeekerController.updateDetails(req.body).then((result) => {
     res.status(200).send(result);
   }).catch((err) => {
     res.status(400).send(err);
   });
 });
+
+app.post("/remove_seeker_profile", (req, res) => {                              //remove selected notification
+  SeekerController.removeSeekerProfile(req.body).then((result) => {
+    res.status(200).send(result);
+  }).catch((err) => {
+    res.status(400).send(err);
+  });
+});
 //------------------------------user entity-----------------------------------------------------------------------------
+
+app.get("/send_sms", (req, res) => {                              //add seeker for user table
+  UserController.sendSMS().then((result) => {
+    res.status(200).send(result);
+  }).catch((err) => {
+    res.status(400).send(err);
+  });
+});
 
 app.post("/add_new_user_seeker", (req, res) => {                              //add seeker for user table
   UserController.addNewUserSeeker(req.body).then((result) => {
@@ -102,11 +135,11 @@ app.post("/add_new_user_donor", (req, res) => {                              //a
   UserController.addNewUserDonor(req.body).then((result) => {
     res.status(200).send(result);
   }).catch((err) => {
-    res.status(400).send(err);
+    res.status(400).send(result);
   });
 });
 
-app.post("/search_user", (req, res) => {                                  //search for user login
+app.post("/search_user", (req, res) => {                                  //search for user login.js
   UserController.searchUser(req.body).then((result) => {
     res.status(200).send(result);
   }).catch((err) => {
@@ -114,7 +147,7 @@ app.post("/search_user", (req, res) => {                                  //sear
   });
 });
 
-app.post("/request_donor", (req, res) => {                                  //search for user login
+app.post("/request_donor", (req, res) => {                                  //search for user login.js
   UserController.searchUser(req.body).then((result) => {
     res.status(200).send(result);
   }).catch((err) => {
@@ -125,12 +158,12 @@ app.post("/request_donor", (req, res) => {                                  //se
 
 //------------------------------notifications-----------------------------------------------------------------------------
 
-app.post("/send_donor_notification", (req, res) => {                                  //search for user login
+app.post("/send_donor_notification", (req, res) => {                                  //search for user login.js
   NotificationController.sendDonorNotification(req.body).then((result) => {
     res.status(200).send(result);
   }).catch((err) => {
     res.status(400).send(err);
-  });
+});
 });
 
 app.post("/get_donor_notifications", (req, res) => {                                  //  get every notifications
@@ -151,6 +184,60 @@ app.patch("/update_donor_notification", (req, res) => {                         
 
 app.post("/remove_donor_notification", (req, res) => {                              //remove selected notification
   NotificationController.removeDonorNotification(req.body).then((result) => {
+    res.status(200).send(result);
+  }).catch((err) => {
+    res.status(400).send(err);
+  });
+});
+
+//------------------------------report entity-----------------------------------------------------------------------------
+
+app.post("/report_donor", (req, res) => {                                //add report
+  ReportController.addReport(req.body).then((result) => {
+    res.status(200).send(result);
+  }).catch((err) => {
+    res.status(400).send(err);
+  });
+});
+
+app.get("/get_reports", (req, res) => {                                  //  get every reports group by donor name
+  ReportController.getDonorReports().then((result) => {
+    res.status(200).send(result);
+  }).catch((err) => {
+    res.status(400).send(err);
+  });
+});
+
+//------------------------------rate entity-----------------------------------------------------------------------------
+
+app.post("/rate_donor", (req, res) => {                                //add rate
+  RateController.addRate(req.body).then((result) => {
+    res.status(200).send(result);
+  }).catch((err) => {
+    res.status(400).send(err);
+  });
+});
+
+app.get("/get_donor_overview", (req, res) => {                                  //  get every reports group by donor name
+  RateController.getDonorRates().then((result) => {
+    res.status(200).send(result);
+  }).catch((err) => {
+    res.status(400).send(err);
+  });
+});
+
+//------------------------------admin entity-----------------------------------------------------------------------------
+
+app.post("/search_seekers", (req, res) => {                                  //search for user login.js
+  AdminController.searchSeekers(req.body).then((result) => {
+    res.status(200).send(result);
+  }).catch((err) => {
+    res.status(400).send(err);
+  });
+});
+
+app.post("/search_donors", (req, res) => {                                  //search for user login.js
+  AdminController.searchDonors(req.body).then((result) => {
     res.status(200).send(result);
   }).catch((err) => {
     res.status(400).send(err);

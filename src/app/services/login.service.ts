@@ -15,7 +15,7 @@ export class LoginService {
     this.isLoginClicked = false;
   }
 
-  setUserLoggedIn() {       //set user login state as true if he logged in
+  setUserLoggedIn() {       //set user login.js state as true if he logged in
     this.isUserLoggedIn = true;
   }
 

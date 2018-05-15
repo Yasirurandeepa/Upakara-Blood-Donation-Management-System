@@ -6,6 +6,7 @@ import {LoginService} from "../services/login.service";
 import {and} from "@angular/router/src/utils/collection";
 import * as EmailValidator from 'email-validator';
 import * as passwordValidator from 'password-validator';
+import swal from 'sweetalert';
 declare var $: any;
 
 @Component({
@@ -27,6 +28,8 @@ export class SignupComponent implements OnInit {
   contact_no: string;
   address: string;
   district: string;
+  verification_code: number;
+  verify: number;
 
   isValid: boolean;
   userService: UserService;
@@ -181,41 +184,56 @@ export class SignupComponent implements OnInit {
     }else if(!/^[0-9]+$/.test(this.contact_no) || this.contact_no.length !== 10) {
       this.valContact = "Invalid contact number";
     }else if(this.contact_no!='' && this.address!='') {
-      this.user.addDonor({
-        username: this.username,
-        email: this.email,
-        gender: this.gender,
-        nic: this.nic,
-        blood_group: this.blood_group,
-        contact_no: this.contact_no,
-        address: this.address,
-        district: this.district,
-        type: "Donor"
-      }).subscribe(
+
+      this.signup.sendSms().subscribe(
         result => {
-          console.log(result);
-          //this.router.navigate(['slider']);
-        }, error => {
-          console.log(error);
+          this.verification_code = result.verification_code;
         }
       );
-      this.user.addUserDonor({
-        username: this.username,
-        password: this.password,
-        type: "Donor",
-        key: 'key'
-      }).subscribe(
-        result => {
-          console.log(result);
-          alert("You have Successfully Registered as a donor");
-          //this.router.navigate(['slider']);
-        }, error => {
-          console.log(error);
-        }
-      );
-    }
-    if(this.address==''){
-      document.forms['donorForm3']['address'].value = "This is a required field";
+
+      swal("Enter your verification code which received to mobile via SMS:", {
+        content: {
+          element: "input",
+        },
+      })
+        .then((value) => {
+          this.verify = Number(value);
+          if (this.verification_code === this.verify) {
+            this.user.addUserDonor({
+              username: this.username,
+              password: this.password,
+              type: "Donor"
+            }).subscribe(
+              result => {
+                //this.router.navigate(['slider']);
+              }, error => {
+                console.log(error);
+              }
+            );
+            this.user.addDonor({
+              username: this.username,
+              email: this.email,
+              gender: this.gender,
+              nic: this.nic,
+              blood_group: this.blood_group,
+              contact_no: this.contact_no,
+              address: this.address,
+              district: this.district,
+              type: "Donor"
+            }).subscribe(
+              result => {
+                swal("Registration Successful!", "You have successfully registered as a donor!", "success");
+                $('#loginModal').modal('hide');
+                this.router.navigate(['login']);
+              }, error => {
+                console.log(error);
+              }
+            );
+          } else {
+            swal("Verification code is Incorrect!");
+          }
+        });
+
     }
 
   }
@@ -289,46 +307,67 @@ export class SignupComponent implements OnInit {
   }
 
   addSeeker() {                                             //Confirm seeker registration form
+    this.valNIC = '';
+    this.valContact = '';
     this.contact_no = document.forms['formSeeker2']['contact_no'].value;
     this.gender = document.forms['formSeeker2']['gender'].value;
     this.nic = document.forms['formSeeker2']['nic'].value;
     this.blood_group = document.forms['formSeeker2']['blood_group'].value;
+    this.district = document.forms['formSeeker2']['district'].value;
 
     if(this.nic=='') {
-      document.forms['formSeeker2']['nic'].value = "This is required field";
+      this.valNIC = "This is required field";
     } if (!/^[0-9]+$/.test(this.contact_no) || this.contact_no.length !== 10) {
-      document.forms['formSeeker2']['contact_no'].value = "Invalid contact number";
+      this.valContact = "Invalid contact number";
     } else if (this.contact_no != '' && this.nic != '') {
-      this.user.addSeeker({
-        username: this.username,
-        email: this.email,
-        contact_no: this.contact_no,
-        gender: this.gender,
-        nic: this.nic,
-        blood_group: this.blood_group,
-        type: "Seeker"
-      }).subscribe(
+
+      this.signup.sendSms().subscribe(
         result => {
-          console.log(result);
-          //this.router.navigate(['slider']);
-        }, error => {
-          console.log(error);
+          this.verification_code = result.verification_code;
         }
       );
-      this.user.addUserSeeker({
-        username: this.username,
-        password: this.password,
-        type: "Seeker",
-        key: 'key'
-      }).subscribe(
-        result => {
-          console.log(result);
-          alert("You have Successfully Registered as a seeker");
-          //this.router.navigate(['slider']);
-        }, error => {
-          console.log(error);
-        }
-      );
+
+      swal("Enter your verification code which received to mobile via SMS:", {
+        content: {
+          element: "input",
+        },
+      })
+        .then((value) => {
+          this.verify = Number(value);
+          if (this.verification_code === this.verify) {
+            this.user.addUserSeeker({
+              username: this.username,
+              password: this.password,
+              type: "Seeker"
+            }).subscribe(
+              result => {
+                //this.router.navigate(['slider']);
+              }, error => {
+                console.log(error);
+              }
+            );
+            this.user.addSeeker({
+              username: this.username,
+              email: this.email,
+              contact_no: this.contact_no,
+              gender: this.gender,
+              nic: this.nic,
+              blood_group: this.blood_group,
+              district: this.district,
+              type: "Seeker"
+            }).subscribe(
+              result => {
+                swal("Registration Successful!", "You have successfully registered as a seeker!", "success");
+                $('#loginModal').modal('hide');
+                this.router.navigate(['login']);
+              }, error => {
+                console.log(error);
+              }
+            );
+          } else {
+            swal("Verification code is Incorrect!");
+          }
+        });
     }
   }
 

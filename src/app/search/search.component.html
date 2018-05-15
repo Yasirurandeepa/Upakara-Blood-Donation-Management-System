@@ -7,7 +7,7 @@
       <div class="col-md-4">
         <div class="form-group">
           <label>Blood Group</label>
-          <select class="form-control divi" name="blood_group">
+          <select class="form-control divi" name="blood_group" (click)="searchDonors()">
             <option>A+</option>
             <option>A-</option>
             <option>B+</option>
@@ -22,7 +22,7 @@
       <div class="col-md-4">
         <div class="form-group">
           <label>District</label>
-          <select class="form-control divi" name="district">
+          <select class="form-control divi" name="district" (click)="searchDonors()">
             <option>Ampara</option>
             <option>Anuradhapura</option>
             <option>Badulla</option>
@@ -59,23 +59,18 @@
     </div>
   </form>
 
-  <table class="table table-bordered table-responsive table-hover" style="margin-top: 10px;">
+  <table class="table table-bordered table-responsive table-hover" style="margin-top: 10px; max-width: 850px;">
     <thead>
     <tr>
       <th>Username</th>
-      <th colspan="2">Action</th>
+      <th>Action</th>
     </tr>
     </thead>
     <tbody>
     <tr *ngFor="let donor of donors">
       <td>{{donor.username}}</td>
       <td>
-        <button class="btn btn-success" (click)="request_donor(donor.username)" >Request</button>
-      </td>
-      <td>
-        <form method="post">
-          <input type="submit" value="Report" class="btn btn-danger" (click)=deleteHall()>
-        </form>
+        <button class="btn btn-primary" (click)="request_donor(donor.username)" >Request</button>
       </td>
     </tr>
     </tbody>

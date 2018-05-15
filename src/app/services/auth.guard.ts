@@ -11,9 +11,9 @@ export class AuthGuard implements CanActivate {
 
   }
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    if(this.login.getUserLoggedIn() == false){
+    if(Boolean(sessionStorage.getItem('isLoggedIn')).valueOf() == false){
       this.router.navigate(['/']);
     }
-    return this.login.getUserLoggedIn();
+    return Boolean(sessionStorage.getItem('isLoggedIn')).valueOf();
   }
 }

@@ -19,7 +19,7 @@ export class SeekerService {
       new RequestOptions({headers: new Headers({'Content-Type': 'application/json'})})).map(res => res.json());
   }
 
-  updateSeekerDetails(data) {         // update donor details
+  updateSeekerDetails(data) {         // update seeker details
     return this.http.patch('http://localhost:3000/update_seeker_details', JSON.stringify(data),
       new RequestOptions({headers: new Headers({'Content-Type': 'application/json'})}))
       .map(res => res.json());
@@ -33,5 +33,11 @@ export class SeekerService {
   getAcceptedDonors(data) {       // get accepted donor details
     return this.http.post('http://localhost:3000/show_accepted_donors', JSON.stringify(data),
       new RequestOptions({headers: new Headers({'Content-Type': 'application/json'})})).map(res => res.json());
+  }
+
+  delete_seeker_profile(data) {         // delete delete details
+    return this.http.post('http://localhost:3000/remove_seeker_profile', JSON.stringify(data),
+      new RequestOptions({headers: new Headers({'Content-Type': 'application/json'})}))
+      .map(res => res.json());
   }
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { LocationStrategy, PlatformLocation, Location } from '@angular/common';
+import { Location } from '@angular/common';
 import {LoginService} from "./services/login.service";
 
 @Component({
@@ -12,6 +12,8 @@ export class AppComponent implements OnInit {
 
      constructor(public location: Location, private log: LoginService) {
        this.loginService = log;
+       this.log.isLogin = Boolean(sessionStorage.getItem('isLoggedIn')).valueOf();
+       this.log.type = sessionStorage.getItem('Type');
      }
 
     ngOnInit(){

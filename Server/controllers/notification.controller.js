@@ -6,9 +6,6 @@ const sendDonorNotification = (msg) => {
       msg.donor_username,
       msg.seeker_username
     ], (err, res) => {
-      if (err) {
-        reject(err);
-      }
       resolve(res);
     })
   });

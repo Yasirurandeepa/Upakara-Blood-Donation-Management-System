@@ -1,26 +1,45 @@
-<table class="table table-bordered table-responsive table-hover" style="margin-top: 10px;">
-  <thead>
-  <tr>
-    <th>Donor Username</th>
-    <th>Email</th>
-    <th>Gender</th>
-    <th>NIC</th>
-    <th>Blood_Group</th>
-    <th>Contact_Number</th>
-    <th>Address</th>
-    <th>District</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr *ngFor="let donor of acceptedDonors">
-    <td>{{donor.username}}</td>
-    <td>{{donor.email}}</td>
-    <td>{{donor.gender}}</td>
-    <td>{{donor.NIC}}</td>
-    <td>{{donor.blood_group}}</td>
-    <td>{{donor.contact_no}}</td>
-    <td>{{donor.address}}</td>
-    <td>{{donor.district}}</td>
-  </tr>
-  </tbody>
-</table>
+<div *ngFor="let donor of acceptedDonors">
+  <div class="card col-lg-3 col-md-4 col-sm-6 col-xs-12" style="margin: 50px">
+    <img src="./assets/img/faces/face-0.jpg" alt="John" style="width:100%">
+    <p style="color: #00A4E4">{{donor.gender}}</p>
+    <p style="color: red; font-size: 25px">{{donor.blood_group}}</p>
+    <h4>{{donor.username}}<h5 style="font-size: 12px; color: gray">NIC:{{donor.NIC}}</h5></h4>
+    <div *ngFor="let rate of donorOverview">
+      <div *ngIf="rate.donor_username===donor.username" style="color: gold">
+        Overview: {{rate.num}}<i class="glyphicon glyphicon-star"></i>
+      </div>
+    </div>
+    <p class="title">{{donor.email}}</p>
+    <p>{{donor.contact_no}}</p>
+    <div style="margin: 24px 0;">
+      <p>From {{donor.district}}</p>
+    </div>
+    <div class="rating" *ngIf="donor.rate_value==NULL">
+      <input type="radio" name="star" id="star1"><label for="star1" (click)="star5(donor.username)"></label>
+      <input type="radio" name="star" id="star2"><label for="star2" (click)="star4(donor.username)"></label>
+      <input type="radio" name="star" id="star3"><label for="star3" (click)="star3(donor.username)"></label>
+      <input type="radio" name="star" id="star4"><label for="star4" (click)="star2(donor.username)"></label>
+      <input type="radio" name="star" id="star5"><label for="star5" (click)="star1(donor.username)"></label>
+    </div>
+    <div *ngIf="donor.rate_value!=NULL">
+      <div *ngIf="donor.rate_value==5" class="rateValue">
+        You have rated {{donor.username}} as Excellent
+      </div>
+      <div *ngIf="donor.rate_value==4" class="rateValue">
+        You have rated {{donor.username}} as Very Good
+      </div>
+      <div *ngIf="donor.rate_value==3" class="rateValue">
+        You have rated {{donor.username}} as Normal
+      </div>
+      <div *ngIf="donor.rate_value==2" class="rateValue">
+        You have rated {{donor.username}} as Low
+      </div>
+      <div *ngIf="donor.rate_value==1" class="rateValue">
+        You have rated {{donor.username}} as Untrusted
+      </div>
+    </div>
+    <p><button (click)="reportDonor(donor.username)">Report</button></p>
+  </div>
+</div>
+
+

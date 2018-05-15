@@ -18,13 +18,13 @@
           <div class="box">
             <div class="content">
               <div class="social">
-                <a class="circle github" href="/auth/github">
+                <a class="circle github">
                   <i class="fa fa-github fa-fw"></i>
                 </a>
-                <a id="google_login" class="circle google" href="/auth/google_oauth2">
+                <a id="google_login" class="circle google">
                   <i class="fa fa-google-plus fa-fw"></i>
                 </a>
-                <a id="facebook_login" class="circle facebook" href="/auth/facebook">
+                <a id="facebook_login" class="circle facebook">
                   <i class="fa fa-facebook fa-fw"></i>
                 </a>
               </div>
@@ -68,7 +68,7 @@
                 </form>
                 <div class="forgot">
                   <span>Signup as a</span>
-                  <a (click)="showRegisterFormDonor()">Donor</a>
+                  <a (click)="showRegisterFormDonor()" style="cursor: pointer">Donor</a>
                 </div>
               </div>
               <div class="box">
@@ -113,6 +113,40 @@
                             <option>AB-</option>
                           </select>
                           <label class="validation">{{valGroup}}</label>
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <label for="district_seeker" class="control-label col-md-2">District</label>
+                        <div>
+                          <select class="form-control divi" name="district" id="district_seeker">
+                            <option>Ampara</option>
+                            <option>Anuradhapura</option>
+                            <option>Badulla</option>
+                            <option>Batticaloa</option>
+                            <option>Colombo</option>
+                            <option>Galle</option>
+                            <option>Gampaha</option>
+                            <option>Hambanthota</option>
+                            <option>Jaffna</option>
+                            <option>Kaluthara</option>
+                            <option>Kandy</option>
+                            <option>Kegalle</option>
+                            <option>Kilinochchi</option>
+                            <option>Kurunagala</option>
+                            <option>Mannar</option>
+                            <option>Mathale</option>
+                            <option>Mathara</option>
+                            <option>Monaragala</option>
+                            <option>Mullathivu</option>
+                            <option>Nuwara eliya</option>
+                            <option>Polonnaruwa</option>
+                            <option>Puttalam</option>
+                            <option>Ratnapura</option>
+                            <option>Trincomalle</option>
+                            <option>Vavniya</option>
+                          </select>
+                          <label class="validation">{{valDistrict}}</label>
                         </div>
                       </div>
 
@@ -164,7 +198,7 @@
                 </form>
                 <div class="forgot">
                   <span>Signup as a</span>
-                  <a (click)="showRegisterFormSeeker()">Seeker</a>
+                  <a (click)="showRegisterFormSeeker()" style="cursor: pointer">Seeker</a>
                 </div>
               </div>
             </div>

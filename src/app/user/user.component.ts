@@ -3,6 +3,9 @@ import {UserService} from "../services/user.service";
 import {SeekerService} from "../services/seeker.service";
 import {LoginService} from "../services/login.service";
 import {DonorService} from "../services/donor.service";
+import * as EmailValidator from 'email-validator';
+import {Router} from "@angular/router";
+import swal from 'sweetalert';
 
 @Component({
   selector: 'app-user',
@@ -11,6 +14,7 @@ import {DonorService} from "../services/donor.service";
 })
 export class UserComponent implements OnInit {
   username: string;
+  userType: string;
   email: string;
   contact_no: string;
   gender: string;
@@ -32,7 +36,7 @@ export class UserComponent implements OnInit {
   private seeker: SeekerService;
   private donor: DonorService;
   private login: LoginService;
-  constructor(private seekerService: SeekerService, private donorService: DonorService, private loginService: LoginService) {
+  constructor(private seekerService: SeekerService, private donorService: DonorService, private loginService: LoginService, private router: Router) {
     this.seeker = seekerService;
     this.donor = donorService;
     this.login = loginService;
@@ -47,14 +51,15 @@ export class UserComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getSeeker();
+    this.getUser();
   }
 
 
-  getSeeker() {
-    // const username = this.login.userName;               ///////////// session username   ///////////////////
+  getUser() {
+    // const username = this.login.js.userName;               ///////////// session username   ///////////////////
     const username = sessionStorage.getItem('currentUser');
     if(sessionStorage.getItem('Type')==='Seeker'){
+      this.userType = 'Seeker';
       this.seeker.getSeekerDetails({
         username: username,
       }).subscribe(
@@ -66,6 +71,7 @@ export class UserComponent implements OnInit {
         }
       );
     }else if(sessionStorage.getItem('Type')==='Donor'){
+      this.userType = 'Donor';
       this.donor.getDonorDetails({
         username: username,
       }).subscribe(
@@ -82,29 +88,81 @@ export class UserComponent implements OnInit {
 
   updateDetails() {
     if(this.validate()){
-      const username = sessionStorage.getItem('currentUser');
-      const gender = document.forms['userForm']['gender'].value;
-      const blood_group = document.forms['userForm']['blood_group'].value;
-      const contact_no = document.forms['userForm']['contact_no'].value;
-      const email = document.forms['userForm']['email'].value;
-      const nic = document.forms['userForm']['nic'].value;
+      if(sessionStorage.getItem('Type')==='Seeker'){
+        const username = sessionStorage.getItem('currentUser');
+        const gender = document.forms['userForm']['gender'].value;
+        const blood_group = document.forms['userForm']['blood_group'].value;
+        const contact_no = document.forms['userForm']['contact_no'].value;
+        const email = document.forms['userForm']['email'].value;
+        const nic = document.forms['userForm']['nic'].value;
 
-      const conf = confirm('Do you want to accept this request?');
-      if (conf === true) {
-        this.seeker.updateSeekerDetails({
-          username: username,
-          gender: gender,
-          blood_group: blood_group,
-          contact_no: contact_no,
-          email: email,
-          nic: nic
-        }).subscribe(
-          result => {
-            this.getSeeker();
-          }, error => {
-            console.log(error);
-          }
-        );
+        swal({
+          // title:
+          text: "Are you sure want to update profile details?",
+          buttons: ['Cancel', 'Ok'],
+          dangerMode: false,
+        })
+          .then((willDelete) => {
+            if (willDelete) {
+              swal("You have successfully updated your profile details!", {
+                icon: "success",
+              });
+              this.seeker.updateSeekerDetails({
+                username: username,
+                gender: gender,
+                blood_group: blood_group,
+                contact_no: contact_no,
+                email: email,
+                nic: nic
+              }).subscribe(
+                result => {
+                  this.getUser();
+                }, error => {
+                  console.log(error);
+                }
+              );
+            } else {
+              swal("Your have cancelled!");
+            }
+          });
+      }
+      else if(sessionStorage.getItem('Type')==='Donor'){
+        const username = sessionStorage.getItem('currentUser');
+        const gender = document.forms['userForm']['gender'].value;
+        const blood_group = document.forms['userForm']['blood_group'].value;
+        const contact_no = document.forms['userForm']['contact_no'].value;
+        const email = document.forms['userForm']['email'].value;
+        const nic = document.forms['userForm']['nic'].value;
+
+        swal({
+          // title:
+          text: "Are you sure want to update profile details?",
+          buttons: ['Cancel', 'Ok'],
+          dangerMode: false,
+        })
+          .then((willDelete) => {
+            if (willDelete) {
+              swal("You have successfully updated your profile details!", {
+                icon: "success",
+              });
+              this.donor.updateDonorDetails({
+                username: username,
+                gender: gender,
+                blood_group: blood_group,
+                contact_no: contact_no,
+                email: email,
+                nic: nic
+              }).subscribe(
+                result => {
+                  this.getUser();
+                }, error => {
+                  console.log(error);
+                }
+              );
+            } else {
+              swal("Your have cancelled!");
+            }
+          });
       }
     }
   }
@@ -135,6 +193,9 @@ export class UserComponent implements OnInit {
     } if (email === '') {
       this.valEmail = 'This is a required field';
       this.isValid = false;
+    } else if(!EmailValidator.validate(email)){               //check valid email address
+      this.valEmail = "invalid email";
+      this.isValid = false;
     } if (!/^[0-9]+$/.test(contact_no) || contact_no.length !== 10) {
       this.valContact = 'Invalid contact number';
       this.isValid = false;
@@ -149,6 +210,52 @@ export class UserComponent implements OnInit {
     } else {
       return false;
     }
+  }
+
+  deleteProfile() {
+    swal({
+      // title:
+      text: "Are you sure want to delete your profile?",
+      buttons: ['Cancel', 'Ok'],
+      dangerMode: true,
+    })
+      .then((willDelete) => {
+        if (willDelete) {
+          swal("You have successfully deleted your profile!", {
+            icon: "success",
+          });
+          if(sessionStorage.getItem('Type')==='Donor'){
+            this.donor.delete_donor_profile({
+              username: sessionStorage.getItem('currentUser')
+            }).subscribe(
+              result => {
+                sessionStorage.removeItem('isLoggedIn');                //remove session details
+                sessionStorage.removeItem('Type');
+                sessionStorage.removeItem('currentUser');
+                window.location.reload();
+              }, error => {
+                console.log(error);
+              }
+            );
+          }
+          else if(sessionStorage.getItem('Type')==='Seeker'){
+            this.seeker.delete_seeker_profile({
+              username: sessionStorage.getItem('currentUser')
+            }).subscribe(
+              result => {
+                sessionStorage.removeItem('isLoggedIn');                //remove session details
+                sessionStorage.removeItem('Type');
+                sessionStorage.removeItem('currentUser');
+                window.location.reload();
+              }, error => {
+                console.log(error);
+              }
+            );
+          }
+        } else {
+          swal("Your have cancelled!");
+        }
+      });
   }
 
 }

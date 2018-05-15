@@ -7,9 +7,8 @@
             <div class="content">
                 <div class="row">
                     <div class="col-md-10">
-                        <h5>Notifications Style</h5>
                         <div class="alert alert-info" *ngFor="let msg of donor_notifications">
-                          <span><span class="glyphicon glyphicon-user"></span> Request from {{msg.seeker_username}} where {{msg.contact_no}}.</span>
+                          <span><span class="glyphicon glyphicon-user"></span> Request from {{msg.seeker_username}} from {{msg.district}}. Contact Number: {{msg.contact_no}}.</span>
                           <button type="button" class="close open" (click)="updateDonorNotification(msg.donor_username, msg.seeker_username)"><span class="glyphicon glyphicon-ok"></span></button>
                           <form method="post">
                             <button type="button" aria-hidden="true" class="close" (click)="deleteDonorNotification(msg.donor_username, msg.seeker_username)"><span class="glyphicon glyphicon-remove"></span></button>
